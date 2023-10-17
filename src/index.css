@@ -17,3 +17,35 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
+
+.btn {
+  display: block;
+  font-family: inherit;
+  color: inherit;
+  font-size: 0.9rem;
+  border: 2px solid #e5e7e9;
+  background-color: #e5e7e9;
+  padding: 1rem 2rem;
+  margin: 1.2rem 0;
+  cursor: pointer;
+  border-radius: 100px;
+  transition: 0.3s;
+}
+
+.btn-option {
+  width: 60%;
+  text-align: left;
+}
+
+.btn-option.wrong {
+  background-color: #ec7063;
+  border: 2px solid #ec7063;
+}
+.btn-option.correct {
+  background-color: #58d68d;
+  border: 2px solid #58d68d;
+}
+
+.answer {
+  transform: translateX(2rem);
+}

@@ -7,6 +7,7 @@ import Question from "./Question";
 const initialState = {
   questions: [],
   questionIndex: 0,
+  answer: null,
 
   // 'loading', 'ready', 'active', 'error', 'finished'
   status: "loading",
@@ -30,13 +31,18 @@ function reducer(state, action) {
         ...state,
         status: "active",
       };
+    case "newAnswer":
+      return {
+        ...state,
+        answer: action.payload,
+      };
     default:
       throw new Error("Action Unknown");
   }
 }
 
 const Main = () => {
-  const [{ status, questionIndex, questions }, dispatch] = useReducer(
+  const [{ status, questionIndex, questions, answer }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -47,7 +53,7 @@ const Main = () => {
     fetch(`https://quizapi.io/api/v1/questions?apiKey=${token}&limit=10`)
       .then((res) => res.json())
       .then((data) => dispatch({ type: "dataReady", payload: data }))
-      .catch((err) => dispatch({ type: "dataFailed" }));
+      .catch((err) => dispatch({ type: "dataFailed", payload: err }));
   };
 
   useEffect(() => {
@@ -59,7 +65,13 @@ const Main = () => {
       {status === "loading" && <Loader />}
       {status === "error" && <Error />}
       {status === "ready" && <StartScreen dispatch={dispatch} />}
-      {status === "active" && <Question question={questions[questionIndex]} />}
+      {status === "active" && (
+        <Question
+          question={questions[questionIndex]}
+          dispatch={dispatch}
+          answer={answer}
+        />
+      )}
     </div>
   );
 };
