@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 const Progress = ({ index, numQuestion, score, answer }) => {
   return (
-    <header className=" font-mono ">
+    <header className=" font-mono">
       <progress className="progress" max={numQuestion} value={index} />
-      <div className="flex justify-between items-center my-3">
+      <div className="flex justify-between items-center my-3 ml-32">
         <p>
           Question <strong>{index + Number(answer !== null)}</strong> /{" "}
           {numQuestion}

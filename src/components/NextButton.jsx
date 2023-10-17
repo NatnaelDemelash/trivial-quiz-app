@@ -4,7 +4,7 @@ const NextButton = ({ dispatch, answer, questionIndex, numQuestions }) => {
   if (questionIndex < numQuestions - 1)
     return (
       <button
-        className="btn btn-ui"
+        className="btn btn-ui "
         onClick={() => dispatch({ type: "nextQuestion" })}
       >
         Next

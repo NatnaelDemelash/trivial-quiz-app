@@ -13,6 +13,7 @@ const initialState = {
   questionIndex: 0,
   answer: null,
   score: 0,
+  highScore: 0,
 
   // 'loading', 'ready', 'active', 'error', 'finished'
   status: "loading",
@@ -61,6 +62,15 @@ function reducer(state, action) {
       return {
         ...state,
         status: "finished",
+        highScore:
+          state.score > state.highScore ? state.score : state.highScore,
+      };
+    case "restart":
+      return {
+        ...initialState,
+        status: "ready",
+        questions: state.questions,
+        highScore: state.highScore,
       };
 
     default:
@@ -69,8 +79,10 @@ function reducer(state, action) {
 }
 
 const Main = () => {
-  const [{ status, questionIndex, questions, answer, score }, dispatch] =
-    useReducer(reducer, initialState);
+  const [
+    { status, questionIndex, questions, answer, score, highScore },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   const numQuestions = questions.length;
 
@@ -108,16 +120,23 @@ const Main = () => {
             answer={answer}
           />
 
-          <NextButton
-            dispatch={dispatch}
-            answer={answer}
-            questionIndex={questionIndex}
-            numQuestions={numQuestions}
-          />
+          <div className="flex flex-col justify-center items-center">
+            <NextButton
+              dispatch={dispatch}
+              answer={answer}
+              questionIndex={questionIndex}
+              numQuestions={numQuestions}
+            />
+          </div>
         </>
       )}
       {status === "finished" && (
-        <ResultPage numQuestions={numQuestions} score={score} />
+        <ResultPage
+          numQuestions={numQuestions}
+          score={score}
+          highScore={highScore}
+          dispatch={dispatch}
+        />
       )}
     </div>
   );
