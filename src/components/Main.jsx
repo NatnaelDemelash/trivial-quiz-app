@@ -7,6 +7,8 @@ import Question from "./Question";
 import NextButton from "./NextButton";
 import Progress from "./Progress";
 import ResultPage from "./ResultPage";
+import Timer from "./Timer";
+import Footer from "./Footer";
 
 const initialState = {
   questions: [],
@@ -14,10 +16,12 @@ const initialState = {
   answer: null,
   score: 0,
   highScore: 0,
-
+  secondRemaining: null,
   // 'loading', 'ready', 'active', 'error', 'finished'
   status: "loading",
 };
+
+const SECS_PER_QUESTION = 30;
 
 function reducer(state, action) {
   switch (action.type) {
@@ -36,6 +40,7 @@ function reducer(state, action) {
       return {
         ...state,
         status: "active",
+        secondRemaining: state.questions.length * SECS_PER_QUESTION,
       };
     case "newAnswer":
       const question = state.questions.at(state.questionIndex);
@@ -73,6 +78,13 @@ function reducer(state, action) {
         highScore: state.highScore,
       };
 
+    case "tick":
+      return {
+        ...state,
+        secondRemaining: state.secondRemaining - 1,
+        status: state.secondRemaining === 0 ? "finished" : state.status,
+      };
+
     default:
       throw new Error("Action Unknown");
   }
@@ -80,7 +92,15 @@ function reducer(state, action) {
 
 const Main = () => {
   const [
-    { status, questionIndex, questions, answer, score, highScore },
+    {
+      status,
+      questionIndex,
+      questions,
+      answer,
+      score,
+      highScore,
+      secondRemaining,
+    },
     dispatch,
   ] = useReducer(reducer, initialState);
 
@@ -120,14 +140,15 @@ const Main = () => {
             answer={answer}
           />
 
-          <div className="flex flex-col justify-center items-center">
+          <Footer>
+            <Timer secondRemaining={secondRemaining} dispatch={dispatch} />
             <NextButton
               dispatch={dispatch}
               answer={answer}
               questionIndex={questionIndex}
               numQuestions={numQuestions}
             />
-          </div>
+          </Footer>
         </>
       )}
       {status === "finished" && (
