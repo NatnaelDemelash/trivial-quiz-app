@@ -32,20 +32,49 @@ body {
   transition: 0.3s;
 }
 
+.btn:disabled {
+  cursor: not-allowed;
+}
+
 .btn-option {
   width: 60%;
   text-align: left;
 }
 
+.btn-ui {
+  background-color: #a367d8;
+  color: #fff;
+  margin-top: 1rem;
+  margin-left: 40rem;
+}
+
 .btn-option.wrong {
-  background-color: #ec7063;
-  border: 2px solid #ec7063;
+  background-color: #f08080;
+  border: 2px solid #f08080;
 }
 .btn-option.correct {
-  background-color: #58d68d;
-  border: 2px solid #58d68d;
+  background-color: #67d8a7;
+  border: 2px solid #67d8a7;
 }
 
 .answer {
   transform: translateX(2rem);
+}
+
+.progress {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80%;
+  height: 12px;
+  grid-column: 1 / -1;
+  border-radius: 50px;
+}
+
+::-webkit-progress-bar {
+  background-color: #c1cdd7;
+  border-radius: 100px;
+}
+::-webkit-progress-value {
+  background-color: #a367d8;
+  border-radius: 100px;
 }

@@ -1,13 +1,17 @@
+/* eslint-disable no-case-declarations */
 import { useEffect, useReducer } from "react";
 import Loader from "./Loader";
 import Error from "./Error";
 import StartScreen from "./StartScreen";
 import Question from "./Question";
+import NextButton from "./NextButton";
+import Progress from "./Progress";
 
 const initialState = {
   questions: [],
   questionIndex: 0,
   answer: null,
+  score: 0,
 
   // 'loading', 'ready', 'active', 'error', 'finished'
   status: "loading",
@@ -32,9 +36,24 @@ function reducer(state, action) {
         status: "active",
       };
     case "newAnswer":
+      const question = state.questions.at(state.questionIndex);
+      const correctAnswers = Object.values(question.correct_answers);
+      const indexOfCorrectAnswer = correctAnswers.indexOf("true");
+
       return {
         ...state,
         answer: action.payload,
+        score:
+          action.payload === indexOfCorrectAnswer
+            ? state.score + 1
+            : state.score,
+      };
+
+    case "nextQuestion":
+      return {
+        ...state,
+        questionIndex: state.questionIndex + 1,
+        answer: null,
       };
     default:
       throw new Error("Action Unknown");
@@ -42,15 +61,17 @@ function reducer(state, action) {
 }
 
 const Main = () => {
-  const [{ status, questionIndex, questions, answer }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [{ status, questionIndex, questions, answer, score }, dispatch] =
+    useReducer(reducer, initialState);
+
+  const numQuestions = questions.length;
 
   const token = "GVS2VYxaPjwqgzka8HP5Ajuuu9nuTLvUYWR23TEs";
 
   const getQuestions = () => {
-    fetch(`https://quizapi.io/api/v1/questions?apiKey=${token}&limit=10`)
+    fetch(
+      `https://quizapi.io/api/v1/questions?apiKey=${token}&difficulty=Medium&limit=10`
+    )
       .then((res) => res.json())
       .then((data) => dispatch({ type: "dataReady", payload: data }))
       .catch((err) => dispatch({ type: "dataFailed", payload: err }));
@@ -66,11 +87,20 @@ const Main = () => {
       {status === "error" && <Error />}
       {status === "ready" && <StartScreen dispatch={dispatch} />}
       {status === "active" && (
-        <Question
-          question={questions[questionIndex]}
-          dispatch={dispatch}
-          answer={answer}
-        />
+        <>
+          <Progress
+            index={questionIndex}
+            numQuestion={numQuestions}
+            score={score}
+          />
+          <Question
+            question={questions[questionIndex]}
+            dispatch={dispatch}
+            answer={answer}
+          />
+
+          <NextButton dispatch={dispatch} answer={answer} />
+        </>
       )}
     </div>
   );

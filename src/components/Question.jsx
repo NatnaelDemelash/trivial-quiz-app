@@ -15,14 +15,14 @@ const Question = ({ question, dispatch, answer }) => {
   // console.log(indexOfCorrectAnswer);
 
   return (
-    <div className=" font-gabarito ">
+    <div className=" font-gabarito">
       <span className="text-[#F39C12] text-lg">(#{question.category})</span>{" "}
       <h1 className="text-2xl text-center px-10 sm:text-justify sm:px-0">
         {question.question}
       </h1>
       {filteredAnswers.map((option, index) => (
         <button
-          className={`btn btn-option ${index === answer ? "answer" : ""} ${
+          className={` btn btn-option ${index === answer ? "answer" : ""} ${
             hasAnswered
               ? index === indexOfCorrectAnswer
                 ? "correct"
