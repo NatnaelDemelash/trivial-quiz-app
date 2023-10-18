@@ -18,6 +18,16 @@ body {
   margin: 0 auto;
 }
 
+#dark {
+  background-color: #273746;
+  height: 100vh;
+  color: #fff;
+}
+
+#light {
+  background-color: f5f5f5c5;
+}
+
 .btn {
   display: block;
   font-family: inherit;
@@ -30,6 +40,18 @@ body {
   cursor: pointer;
   border-radius: 100px;
   transition: 0.3s;
+}
+
+#dark .btn {
+  color: #333;
+}
+
+#dark .get-started {
+  border: 2px solid #a367d8;
+}
+
+#dark .get-started:hover {
+  background: #a367d8;
 }
 
 .btn:disabled {
@@ -48,11 +70,21 @@ body {
   width: 20%;
 }
 
+#dark .btn-ui {
+  border: 1px solid #a367d8;
+  color: #fff;
+}
+
 .btn-restart {
   background-color: #333;
   color: #fff;
   margin-top: 1rem;
   width: 20%;
+}
+
+#dark .btn-restart {
+  background: #fff;
+  color: #111;
 }
 
 .btn-option.wrong {
@@ -111,4 +143,13 @@ body {
   border: 2px solid #eb984e;
   padding: 0.4rem 2.4rem;
   border-radius: 100px;
+}
+
+.switch {
+  display: flex;
+  width: 100vw;
+  height: 100px;
+  align-items: center;
+  justify-content: end;
+  padding: 0 2rem;
 }

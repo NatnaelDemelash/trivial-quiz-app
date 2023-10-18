@@ -23,7 +23,7 @@ const StartScreen = ({ dispatch }) => {
       ))}{" "}
       <br />
       <button
-        className="my-16 transition ease-in-out delay-300 bg-transparent border-2 rounded-md border-black py-4 px-6 hover:-translate-y-1 hover:scale-110 hover:bg-black hover:text-white duration-300"
+        className="get-started my-16 transition ease-in-out delay-300 bg-transparent border-2 rounded-md border-black py-4 px-6 hover:-translate-y-1 hover:scale-110 hover:bg-black hover:text-white duration-300"
         onClick={() => dispatch({ type: "startQuestion" })}
       >
         Get Started
