@@ -12,8 +12,8 @@ const StartScreen = ({ dispatch }) => {
 
   return (
     <div className="text-center my-16">
-      <h1 className="text-6xl mb-6 font-gabarito">Welcome to Quiz Trivia! </h1>
-      <p className=" text-3xl mb-10 font-gabarito">
+      <h1 className="text-5xl mb-6 font-gabarito">Welcome to Quiz Trivia! </h1>
+      <p className=" text-2xl mb-10 font-gabarito">
         Questions to test your Computer Science Knowledge{" "}
       </p>
       {questionCategory.map((cat) => (
